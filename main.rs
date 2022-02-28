@@ -10,8 +10,17 @@ fn main() {
         Ok(image) => match image {
             lodepng::Image::RGBA(bitmap) => {
                 println!("{} x {}", bitmap.width, bitmap.height);
+                println!("{:?}", bitmap.buffer);
                 for pixel in bitmap.buffer {
-                    println!("{}", pixel);
+                    print!(
+                        "\x1b[38;2;{};{};{}m", 
+                        pixel.r, pixel.g, pixel.b
+                    );
+                    print!(
+                        "\x1b[48;2;{};{};{}m", 
+                        pixel.r, pixel.g, pixel.b
+                    );
+                    print!("▄")
                 }
             },
             x => println!("Decoded some other image format {:?}", x),
