@@ -14,13 +14,14 @@ fn main() {
         match state.decode_file(&path) {
             Ok(image) => match image {
                 lodepng::Image::RGBA(bitmap) => {
-                    println!("{} x {}", bitmap.width, bitmap.height);
-                    for row in 0..=bitmap.height {
+                    for row in (0..bitmap.height).step_by(2) {
                         for col in 0..bitmap.width {
-                            let pixel = bitmap.buffer[(row * bitmap.width) + col];
+                            let upper_pixel = bitmap.buffer[(row * bitmap.width) + col];
+                            let lower_pixel = bitmap.buffer[((row + 1) * bitmap.width) + col];
                             print!(
-                                "\x1b[48;2;{};{};{}m ", 
-                                pixel.r, pixel.g, pixel.b
+                                "\x1b[48;2;{};{};{}m\x1b[38;2;{};{};{}m▄", 
+                                upper_pixel.r, upper_pixel.g, upper_pixel.b, 
+                                lower_pixel.r, lower_pixel.g, lower_pixel.b
                             );
                         }
                         print!("\x1b[0m\n");
