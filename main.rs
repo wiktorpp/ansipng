@@ -31,7 +31,11 @@ fn main() {
                                     lower_pixel.r, lower_pixel.g, lower_pixel.b
                                 );
                             } else if upper_pixel == lower_pixel {
-                                println("t")
+                                print!(
+                                    //"\x1b[38;2;{};{};{}m█", 
+                                    "\x1b[48;2;{};{};{}m "
+                                    upper_pixel.r, upper_pixel.g, upper_pixel.b
+                                );
                             } else{
                                 print!(
                                     "\x1b[48;2;{};{};{}m\x1b[38;2;{};{};{}m▄",
